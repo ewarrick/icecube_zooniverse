@@ -8,14 +8,25 @@ import sys
 import os
 import argparse
 import numpy as np
+import pandas as pd
+import csv
 
 def primary_cut(frame):
 
     if frame['I3EventHeader'].sub_event_stream == 'NullSplit':
         return False
     elif frame['I3EventHeader'].sub_event_stream == 'InIceSplit':
+        preds_raw = frame['ml_suite_classification'].values()[0:4]
+        preds = np.argmax(preds_raw, axis=0)
+        #mask stuff
         return np.max(frame['ml_suite_classification'].values()[0:4]) <= 0.6
 
+
+# skim_pred = frame['ml_suite_classification'].values()[0]
+# cascade_pred = frame['ml_suite_classification'].values()[1]
+# tgtrack_pred = frame['ml_suite_classification'].values()[2]
+# starttrack_pred = frame['ml_suite_classification'].values()[3]
+# stoptrack_pred = frame['ml_suite_classification'].values()[4]
 
 def dofilter(infile, outdir):
     drive, ipath =os.path.splitdrive(infile)

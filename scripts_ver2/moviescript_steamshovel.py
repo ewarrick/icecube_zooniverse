@@ -15,6 +15,10 @@ from icecube.shovelart import PyQColor
     # starttrack_pred = frame['ml_suite_classification'].values()[3]
     # stoptrack_pred = frame['ml_suite_classification'].values()[4]
 
+####OPEN files
+for file in folder:
+
+
 #######FOLDERS SETUP#######
 
 #Makes folders for videos and stills of currently open i3 file.
@@ -95,4 +99,4 @@ for i in range(starting_index,imageNum):
 
     app.files.nextMatchingFrame(icetray.I3Frame.DAQ) #Go to next Q frame and begin loop over again.
 
-window.close() #Close steamshovel when all frames have been turned into movies. 
+window.close() #Close steamshovel when all frames have been turned into movies.
