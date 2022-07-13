@@ -1,26 +1,27 @@
-Procedures for Building Subject Set for IceCube Zooniverse
+Procedures for Building Subject Set for IceCube Zooniverse -- VERSION 2
 
-1) Download desired DNN Classifier i3 file from Cobalt (/data/sim/sim-new/scratch/rsnihur/new_processing_test/IceCube/2020/generated/neutrino-generator/21971/ML)
-2) Apply filters to i3 file. 
-	2a) Run i3 file through script "filterforpreds_inicesplit.py" -- cuts out events that do not have desired subeventstream and desired prediction value. 
-		Result: returns new i3 file "filtered_preds[run_id].i3.bz2"
-	2b) Run new i3 file created in 2a through a second filter script "filterqs.py" -- filters out P (physics) frames and splits i3 file into multiple i3 files of 		specified size limit. 
-		Result: returns multiple i3 files made up of only DAQ frames with predictions under specified limit, where the size of the i3 file is determined in 			script. 
-3) Open steamshovel with (any) i3 file (and GCD) and make sure desired displays are selected -- this is a sanity check to make sure that the videos will have actual data displayed. 
-	3a) Make sure you close steamshovel and all loaded i3 frames by using the command "window.close()" in the steamshovel python shell. 
-4) Open steamshovel again with desired i3 file and GCD file. 
-	4a) Make sure that the first frame selected is frame 0 (should be a frame from the GCD). 
-	4b) Within python shell, run execute function to start the script. (Check on folder organization system)
-	4c) Check that all videos were made and that steamshovel didn't segfault (but it should close after all videos have been completed, there is a print statement that tells you the event and run ids of the video that was just made and then prints out the current frame index out of all frames. This is a good place to check)
-	4d) Stills and videos are stored in numbered folders corresponding to what number i3 file you are working on **note to self: see if folders can have run_id in title. 
-5) Check organization.
-	5a) Make sure that the folders of videos and stills are where you want them.
-	5b) Make a new folder where compressed videos will be stored. 
-6) Open Handbrake.
-	6a) File --> Open Source --> [select folder of videos, check preset selected for ZooniverseCompression, set distination for compressed videos, check preferences 
-	for naming convention of compressed file] --> Queue --> Add Multiple --> [check Select All, make sure queue in upper right corner has a number next to it 
-	representing the number of videos in the queue] --> Hit green Start button. 
-	6b) Check that videos are being compressed into desired folder with desired naming convention and are under 1 MB in file size. 
-7) Make CSV Manifest for Zooniverse.
-8) Upload subject set and csv to Zooniverse. 
-	8a) Workflow?
+1) Download desired DNN Classifier i3 file from Cobalt (currently I am using a file located at /data/sim/sim-new/scratch/rsnihur/new_processing_test/IceCube/2020/generated/neutrino-generator/21971/ML) by typing in your local terminal (check that your current local working directory is where you want to save the i3 file) 'scp username@data.icecube.wisc.edu:/path/to/file/[filename].i3.bz2 .' (replace username with your username and filename with the i3 filename)
+
+	1a) The scripts you will be using might have specified directories within them, so make sure to change them to your desired directories. note to self: change to make them take arguments?
+	1b) Make sure to initialize the icetray environment shell ('icerec') prior to running any scripts.
+	1c) Make a directory for the run and store the i3 file there, then make subdirectories for the different class types in the style 'class_type_i' where i is 0, 1, 2, 3, and 4.  
+	
+2) Apply filters to i3 file by running the scipt 'filterpreds_cycle.py' (note: the i3 file name is a specified variable within the script, so make sure to change the variable name)
+	2a) Input desired cut values. The script will now go through your i3 file and filter out by type (option 0 through 4) and specified cut values (less than will set the max prediction value to be less than or equal to the cut value and greater than will set the max prediction to be greater than or equal to the cut value). 
+	2b) While it's doing that, the filter will also make an hdf file for each cut (this will be converted to a csv for the Zooniverse metadata manifest). After that, the i3 file will go through another filter that removes any frame that isn't a DAQ frame and splits that file into multiple files of a denoted size.
+	2c) To edit the individual filters see the python scripts: 'fitlerqs.py' (filter for q frames) and 'filterforpreds_inicesplit.py' (filter for cut values and hdf file). 
+
+3) Make movies using steamshovel by running the script 'steamshovel_cycle.py'. Again, directories are specified in the script, so check that they are correct prior to running. This will make videos only out of DAQ frames. 
+	3a) The actual script that makes a set of movies from one i3 file is 'moviescript_steamshovel.py'. This script makes the different directories for the videos and sets the displays for steamshovel. If you want to change how many videos are made, change the endframe variable. 
+	3b) GCD is located in the directory 'i3_files'. 
+	
+4) Compress the videos using the script 'compress_cycle.py'. 
+	4a) You will be prompted to input the upper and lower cut values that you input into the filter script in step (2). It should cycle through all class types of events. 
+	
+5) Zooniverse stuff --> update
+	5a) Depends on what Peter comes up with. I currently have a jupyter notebook that turns the hdf tables into a csv (see 'turnhdf_tocsv.ipynb'). 
+	5b) Build manifest and upload using script from Peter?
+	
+	Peter's uploader: Uses run_config script and python package cryptography.
+	To change main directory either delete the run_config.csv or edit it to go to a different directory. 
+	input hd5 file name with extension, input directory where compressed videos of that cut are stored, input name of subject set (if using a name that is already in use subjects will upload to existing set without deleting prior uploads). Rerun on uploader on any folder where the save and add to zooniverse functions are commented out to make the updates manifest/uploader log. 

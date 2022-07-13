@@ -1,5 +1,6 @@
-#FILTER RETURNS Q FRAMES ONLY
-#FILTER 2 OF 2.
+#i3 filter for inicesplit SubEventStreams
+#FILTER RETURNS PHYS AND Q FRAMES OF SPECIFIED PREDICTION VALUES AND INICESPLIT
+#FILTER 1 OF 2.
 #Imports modules
 import numpy as np
 from icecube import dataio, dataclasses, icetray
@@ -8,14 +9,15 @@ import sys
 import os
 import argparse
 import numpy as np
+import pandas as pd
+import csv
 
-# def primary_cut(frame):
-#     if frame['I3EventHeader'].sub_event_stream == 'NullSplit':
-#         return False
-#     elif frame['I3EventHeader'].sub_event_stream == 'InIceSplit':
-#         return np.max(frame['ml_suite_classification'].values()[0:4]) <= 0.6
+def substream_cut(frame):
 
-#ADD IN MAKE DIR FOR FILES? OR IS SAVING ALL TO ONE FOLDER FINE?
+    if frame['I3EventHeader'].sub_event_stream == 'NullSplit':
+        return False
+    elif frame['I3EventHeader'].sub_event_stream == 'InIceSplit':
+        return True
 
 def dofilter(infile, outdir):
     drive, ipath =os.path.splitdrive(infile)
@@ -23,16 +25,17 @@ def dofilter(infile, outdir):
     infile_name = infile.split('/')[-1]
     tray = I3Tray()
     tray.Add('I3Reader', FilenameList=[infile])
-    #tray.Add(primary_cut)
-    tray.Add('I3MultiWriter', 'EventWriter',
-    FileName= outdir+'daq_only-%04u_'+infile_name,
+    tray.Add(substream_cut)
+    tray.Add('I3Writer', 'EventWriter',
+    FileName= outdir+'filtered_preds_'+infile_name,
         Streams=[icetray.I3Frame.TrayInfo,
         icetray.I3Frame.Geometry,
         icetray.I3Frame.Calibration,
         icetray.I3Frame.DetectorStatus,
         icetray.I3Frame.DAQ,
+        icetray.I3Frame.Physics, #delete
         icetray.I3Frame.Stream('S')],
-        SizeLimit = 2*10**6,)
+        DropOrphanStreams=[icetray.I3Frame.DAQ]) #delete
     tray.AddModule('TrashCan','can')
 
     tray.Execute()
