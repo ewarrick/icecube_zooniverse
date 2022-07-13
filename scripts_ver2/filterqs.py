@@ -1,5 +1,5 @@
 #FILTER RETURNS Q FRAMES ONLY
-#FILTER 2 OF 2. 
+#FILTER 2 OF 2.
 #Imports modules
 import numpy as np
 from icecube import dataio, dataclasses, icetray
@@ -9,13 +9,13 @@ import os
 import argparse
 import numpy as np
 
-def primary_cut(frame):
-    if frame['I3EventHeader'].sub_event_stream == 'NullSplit':
-        return False
-    elif frame['I3EventHeader'].sub_event_stream == 'InIceSplit':
-        return np.max(frame['ml_suite_classification'].values()[0:4]) <= 0.6
+# def primary_cut(frame):
+#     if frame['I3EventHeader'].sub_event_stream == 'NullSplit':
+#         return False
+#     elif frame['I3EventHeader'].sub_event_stream == 'InIceSplit':
+#         return np.max(frame['ml_suite_classification'].values()[0:4]) <= 0.6
 
-
+#ADD IN MAKE DIR FOR FILES? OR IS SAVING ALL TO ONE FOLDER FINE?
 
 def dofilter(infile, outdir):
     drive, ipath =os.path.splitdrive(infile)
@@ -23,9 +23,9 @@ def dofilter(infile, outdir):
     infile_name = infile.split('/')[-1]
     tray = I3Tray()
     tray.Add('I3Reader', FilenameList=[infile])
-    tray.Add(primary_cut)
+    #tray.Add(primary_cut)
     tray.Add('I3MultiWriter', 'EventWriter',
-    FileName= outdir+'filtered-%04u_'+infile_name,
+    FileName= outdir+'daq_only-%04u_'+infile_name,
         Streams=[icetray.I3Frame.TrayInfo,
         icetray.I3Frame.Geometry,
         icetray.I3Frame.Calibration,
