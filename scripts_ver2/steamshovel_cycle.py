@@ -27,12 +27,14 @@ for t in range(0,5):
         if filename.startswith('daq'):
             print("Filename is: ",f)
             subprocess.call(f"steamshovel {gcd_file} {f} --vanillaconsole --script {movie_script} --batch", shell = True)
+
     for filename_other in os.listdir(indir_greater):
         f1 = os.path.join(indir_greater, filename_other)
         if filename_other.startswith('daq'):
             print("Filename is: ",f)
             subprocess.call(f"steamshovel {gcd_file} {f1} --vanillaconsole --script {movie_script} --batch", shell = True)
 
+subprocess.call(f"find {directory} -name "*.png" -delete")
 
 
 
