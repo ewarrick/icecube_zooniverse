@@ -34,7 +34,7 @@ for t in range(0,5):
             print("Filename is: ",f)
             subprocess.call(f"steamshovel {gcd_file} {f1} --vanillaconsole --script {movie_script} --batch", shell = True)
 
-subprocess.call(f"find {directory} -name "*.png" -delete")
+subprocess.call(f"find {directory} -name {"*.png"} -delete")
 
 
 

@@ -142,8 +142,7 @@ window.gl.backgroundColor = PyQColor(80,80,80,255) #sets background color (in th
 #####LOOP THROUGH FRAMES IN CURRENTLY OPENED I3 FILE########
 #Make sure steamshovel is opened and has correct displays selected and the camera is at a good starting point.
 
-endframe = 15
-#app.files.nFrames
+endframe = app.files.nFrames
 
 for i in range(starting_index, endframe): #use nFrames because it is every frame, but print imageNum for number. USE 10 FOR BETA TEST
 #app.files.nFrames, read end range

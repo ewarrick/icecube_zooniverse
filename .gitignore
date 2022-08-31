@@ -1,0 +1,33 @@
+
+*.gz
+*.bz2
+*.hd5
+*.mp4
+*.csv
+plots_ver2/opencsv.ipynb
+plots_ver2/ml_preds_hist.png
+plots_ver2/HistogramCodeForMLEventsPreds.ipynb
+plots_ver2/hist_draft1.png
+plots_ver2/events_predictions_hist.png
+plots_ver2/events_predictions_bar.png
+plots_ver2/charged_neutral_current_plots.ipynb
+plots_ver2/.ipynb_checkpoints/opencsv-checkpoint.ipynb
+plots_ver2/.ipynb_checkpoints/HistogramCodeForMLEventsPreds-checkpoint.ipynb
+plots_ver2/.ipynb_checkpoints/charged_neutral_current_plots-checkpoint.ipynb
+notes_ver2/zooniverseicecubeprocedures_ver2.txt
+notes_ver2/zooniverseicecubeprocedures_ver1.txt
+notes_ver2/misc_notesver2.txt
+notes_ver2/misc_notesver1.txt
+notes_ver2/misc1_notesver2txt
+notes_ver2/images/steamshovelcolorbar.png
+notes_ver2/images/colorbar_steamshovel.gif
+i3_files/Run21971/Dataset 21971 - IceProd_files/util.js
+i3_files/Run21971/Dataset 21971 - IceProd_files/rest.js
+i3_files/Run21971/Dataset 21971 - IceProd_files/logo_155x60.png
+i3_files/Run21971/Dataset 21971 - IceProd_files/jquery.min.js
+i3_files/Run21971/Dataset 21971 - IceProd_files/jquery-ui.min.js
+i3_files/Run21971/Dataset 21971 - IceProd_files/fetch.js
+i3_files/Run21971/Dataset 21971 - IceProd_files/chosen.min.css
+i3_files/Run21971/Dataset 21971 - IceProd_files/chosen.jquery.min.js
+i3_files/Run21971/Dataset 21971 - IceProd_files/base.css
+i3_files/Run21971/Dataset 21971 - IceProd.html
