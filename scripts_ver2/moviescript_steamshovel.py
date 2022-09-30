@@ -100,7 +100,7 @@ scenario.changeSetting( artist, 'colormap', I3TimeColorMap() )
 scenario.changeSetting( artist, 'scale', 10 )
 scenario.changeSetting( artist, 'power', 0.15 )
 scenario.changeSetting( artist, 'static', PyQColor(255,0,255,255) )
-scenario.changeSetting( artist, 'log10(delay/ns)', 5 )
+scenario.changeSetting( artist, 'log10(delay/ns)', 6 ) #making change as suggested to fix color gradient.
 scenario.changeSetting( artist, 'custom color window', '' )
 scenario.setIsActive( artist, True )
 
